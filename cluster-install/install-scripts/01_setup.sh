@@ -47,6 +47,8 @@ echo "Enabling management plugin"
 echo "--------------------------"
 #enable management plugin
 rabbitmq-plugins enable rabbitmq_management
+#metrics for prometheus
+rabbitmq-plugins enable rabbitmq_prometheus
 
 echo "-------------------"
 echo "Adding default user"
