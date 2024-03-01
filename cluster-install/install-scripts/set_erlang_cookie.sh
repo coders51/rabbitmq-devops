@@ -13,9 +13,10 @@ then
     #overwrite the erlang cookie
     systemctl stop rabbitmq-server
     chmod 666 /var/lib/rabbitmq/.erlang.cookie
-    echo $SETUP_ERLANG_COOKIE > /var/lib/rabbitmq/.erlang.cookie
+    echo -n $SETUP_ERLANG_COOKIE > /var/lib/rabbitmq/.erlang.cookie
     chmod 400 /var/lib/rabbitmq/.erlang.cookie
     systemctl start rabbitmq-server 
+    sleep 30
 else
     echo "-------------------------------------"
     echo "Skipping rabbitmq erlang cookie setup"

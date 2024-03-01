@@ -1,7 +1,7 @@
 #!/bin/bash
 #First setup the node with setup.sh, then use this script to join a cluster.
 #usage
-#   $> sudo setup_cluster.sh "rabbit@the-cluster-node" "the-erlang-cookie"
+#   $> sudo 02_setup_cluster.sh "rabbit@the-cluster-node" "the-erlang-cookie"
 #
 SETUP_CLUSTER_HOST=$1
 SETUP_ERLANG_COOKIE=$2

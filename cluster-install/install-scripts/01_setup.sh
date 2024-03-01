@@ -1,6 +1,6 @@
 #!/bin/bash
 #usage
-#   $> sudo setup.sh ["the-erlang-cookie"]
+#   $> sudo 01_setup.sh ["the-erlang-cookie"]
 #
 echo "---------------------"
 echo "Installing base tools"
@@ -36,10 +36,11 @@ echo "-------------------"
 apt-get install rabbitmq-server -y --fix-missing
 
 echo "---------------------------"
-echo "Running rabbitmq at startup"
+echo "Enabling rabbitmq at startup"
 echo "---------------------------"
 #start rabbitmq and make it run at startup
 systemctl enable rabbitmq-server
+sleep 30
 
 echo "--------------------------"
 echo "Enabling management plugin"
