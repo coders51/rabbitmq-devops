@@ -1,6 +1,6 @@
 #!/bin/bash
 #usage
-#   $> sudo 01_setup.sh ["the-erlang-cookie"]
+#   $> sudo 01_setup.sh ["rabbitmq-server 3 minor version"]
 #
 echo "---------------------"
 echo "Installing base tools"
@@ -29,11 +29,24 @@ apt-get install -y erlang-base \
                         erlang-runtime-tools erlang-snmp erlang-ssl \
                         erlang-syntax-tools erlang-tftp erlang-tools erlang-xmerl
 
-echo "-------------------"
-echo "Installing rabbitmq"
-echo "-------------------"
+
 ## Install rabbitmq-server and its dependencies
-apt-get install rabbitmq-server -y --fix-missing
+if [ -z "$1" ]; then
+    echo "-------------------"
+    echo "Installing latest version of rabbitmq"
+    echo "-------------------"
+    sudo apt-get install rabbitmq-server -y --fix-missing
+else
+    latest_patch=$(apt list -a rabbitmq-server 2>/dev/null | grep -oP "3.12.\K(\d{1,2}-\d{1,2})" | sort -V | tail -n 1)
+    if [ -z "$latest_patch" ]; then
+        echo "...could not find any version of minor $1, aborting"
+        exit 1
+    fi
+    echo "-------------------"
+    echo "Installing version 3.$1.$latest_patch of rabbitmq"
+    echo "-------------------"
+    sudo apt-get install rabbitmq-server=3.$1.$latest_patch -y --fix-missing
+fi
 
 echo "---------------------------"
 echo "Enabling rabbitmq at startup"
@@ -56,6 +69,3 @@ echo "-------------------"
 rabbitmqctl add_user rabbit rabbit
 rabbitmqctl set_user_tags rabbit administrator
 rabbitmqctl set_permissions -p / rabbit ".*" ".*" ".*"
-
-#overwrite the erlang cookie
-./set_erlang_cookie.sh $1
