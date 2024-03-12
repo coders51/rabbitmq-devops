@@ -63,6 +63,11 @@ rabbitmq-plugins enable rabbitmq_management
 #metrics for prometheus
 rabbitmq-plugins enable rabbitmq_prometheus
 
+echo "----------------------------------------------"
+echo "Enabling feature flag detailed_queues_endpoint"
+echo "----------------------------------------------"
+rabbitmqctl enable_feature_flag detailed_queues_endpoint
+
 echo "-------------------"
 echo "Adding default user"
 echo "-------------------"
