@@ -2,7 +2,7 @@ version: '3.9'
 
 services:
   rabbitmq:
-    image: rabbitmq:3.10-management
+    image: rabbitmq:3.12-management
     hostname: rabbitmq
     ports:
       - 15692:15692
@@ -17,7 +17,7 @@ services:
       RABBITMQ_DEFAULT_PASS: rabbit
   
   federated-rabbitmq:
-    image: rabbitmq:3.10-management
+    image: rabbitmq:3.12-management
     hostname: rabbitmq
     ports:
       - 25692:15692
@@ -49,6 +49,9 @@ services:
       - type: bind
         source: ./prometheus.yml
         target: /etc/prometheus/prometheus.yml
+      - type: bind
+        source: ./alert.rules.yml
+        target: /etc/prometheus/alert.rules.yml
     user: root
     command:
       - '--config.file=/etc/prometheus/prometheus.yml'

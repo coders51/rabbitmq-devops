@@ -26,3 +26,6 @@ scrape_configs:
       - source_labels: [__name__]
         regex: "rabbitmq_identity_info"
         action: drop
+        
+rule_files:
+ - "/etc/prometheus/alert.rules.yml"
