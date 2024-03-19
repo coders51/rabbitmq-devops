@@ -1,0 +1,11 @@
+groups:
+- name: RabbitMQ-Architecture
+  rules:
+  - alert: DeadLetter not empty
+    expr: sum(rabbitmq_detailed_queue_messages{queue="<queue_name>"}) > 0
+    for: 0m
+    labels:
+      severity: warning
+    annotations:
+      summary: DeadLetter queue is not empty
+      description: "The DeadLetter queue has some messages"

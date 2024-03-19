@@ -1,0 +1,47 @@
+global:
+  smtp_smarthost: 'smtp4dev:25'
+  smtp_from: 'alertmanager@example.org'
+  smtp_require_tls: false
+
+route:
+  routes:
+    - group_by: ["service"]
+      group_wait: 30s
+      group_interval: 5m
+      mute_time_intervals: ["weekday-off-evenings", "weekday-off-mornings", "weekends"]
+  receiver: team-mails
+
+time_intervals:
+  - name: "working-hours"
+    time_intervals:
+    - times:
+      - start_time: "09:00"
+        end_time: "18:00"
+      location: "Europe/Rome"
+      weekdays: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday']
+  - name: "weekday-off-evenings"
+    time_intervals:
+    - times:
+      - start_time: "18:00"
+        end_time: "23:59"
+      location: "Europe/Rome"
+      weekdays: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday']
+  - name: "weekday-off-mornings"
+    time_intervals:
+    - times:
+      - start_time: "00:00"
+        end_time: "08:59"
+      location: "Europe/Rome"
+      weekdays: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday']
+  - name: "weekends"
+    time_intervals:
+      - times:
+        - start_time: "00:00"
+          end_time: "23:59"
+        location: "Europe/Rome"
+        weekdays: ['Saturday', 'Sunday']
+
+receivers:
+  - name: "team-mails"
+    email_configs: 
+      - to: "test-receiver@example.com"
