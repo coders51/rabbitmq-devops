@@ -1,11 +1,21 @@
 groups:
 - name: RabbitMQ-Architecture
   rules:
-  - alert: DeadLetter not empty
-    expr: sum(rabbitmq_detailed_queue_messages{queue="<queue_name>"}) > 0
+  - alert: DeadLetter (dlq) not empty
+    expr: sum(rabbitmq_detailed_queue_messages{queue="dlq"}) > 0
     for: 0m
     labels:
       severity: warning
+      group: "RabbitMQ-Architecture"
     annotations:
       summary: DeadLetter queue is not empty
-      description: "The DeadLetter queue has some messages"
+      description: "The DeadLetter queue (dlq) has some messages"
+  - alert: Other queue not empty
+    expr: sum(rabbitmq_detailed_queue_messages{queue="other"}) > 0
+    for: 0m
+    labels:
+      severity: warning
+      group: "RabbitMQ-Architecture"
+    annotations:
+      summary: Other queue is not empty
+      description: "The other queue has some messages"

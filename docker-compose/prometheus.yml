@@ -9,10 +9,15 @@ scrape_configs:
     static_configs:
       - targets: ["localhost:9090"]
 
+  - job_name: "alertmanager"
+    scrape_interval: 1m
+    static_configs:
+      - targets: ["alert-manager:9093"]
+
   - job_name: "rabbitmq"
     static_configs:
       - targets: ["rabbitmq:15692"]
-
+  
   - job_name: "rabbitmq-detailed"
     metrics_path: "/metrics/detailed"
     params:
@@ -31,7 +36,7 @@ scrape_configs:
 alerting:
   alertmanagers:
     - scheme: "http"
-    - static_configs:
+      static_configs:
       - targets: ["alert-manager:9093"]
 
 
