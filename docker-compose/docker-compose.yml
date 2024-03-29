@@ -18,7 +18,7 @@ services:
   
   federated-rabbitmq:
     image: rabbitmq:3.10-management
-    hostname: rabbitmq
+    hostname: federated-rabbitmq
     ports:
       - 25692:15692
       - 25672:15672
